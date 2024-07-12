@@ -1,25 +1,30 @@
-def sosu(a):
-    if a < 2:
-        return False
-    for i in range(2,a):
-        if a%i==0:
-            return False
-    return True
+import sys
+sys.setrecursionlimit(10**8)
 
-def gold(a):
-    left = (int)(a/2)
-    right = (int)(a/2)
-    while left > 0:
-        if sosu(left) & sosu(right):
-            return (left,right)
-        left-=1
-        right += 1
 
-    return None
+class Node:
+    def __init__(self, value) -> None:
+        self.parent = self
+        self.value = value
+    def getHead(self):
+        cur = self
+        while cur != cur.parent:
+            cur = cur.parent
+        return cur
+    
 
-n = int(input())
 
-for i in range(n):
-    a = int(input())
-    result = gold(a)
-    print("{} {}".format(result[0],result[1]))
+
+
+input = sys.stdin.readline().split()
+V = int(input[0])
+E = int(input[1])
+for i in range(V):
+    input = sys.stdin.readline()
+    t.push(int(input))
+
+N = int(sys.stdin.readline())
+for i in range(N):
+    input = sys.stdin.readline()
+    t.remove(int(input))
+

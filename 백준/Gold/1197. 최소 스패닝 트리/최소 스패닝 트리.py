@@ -41,12 +41,12 @@ edges.sort(key=lambda x:x[2])
 
 count = 0
 for e in edges:
-    v0:Node = vertexes[e[0]]
-    v1:Node = vertexes[e[1]]
+    v0:Node = vertexes[e[0]].getHead()
+    v1:Node = vertexes[e[1]].getHead()
     # 사이클 나옴
-    if v0.getHead() == v1.getHead():
+    if v0 == v1:
         continue
-    v1.getHead().parent = v0.getHead()
+    v1.parent = v0
     count += e[2]
 
 print(count)

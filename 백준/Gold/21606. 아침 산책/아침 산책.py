@@ -22,21 +22,19 @@ def DFS(cur:Node):
         if visited[i] != 0:
             continue
         #실내에 도착했을 때 카운트 올리고 리턴
-        if isInside[i]:
+        if isInside[i-1] == '1':
             count+=1
             continue
         else:
             DFS(nodes[i])
+    visited[cur.value] = 0
 
             
 N = int(sys.stdin.readline())
 
 #여기 최적화 가능
 #실내 여부 입력
-input = sys.stdin.readline()
-isInside = [0]
-for i in range(N):
-    isInside.append(int(input[i]))
+isInside = sys.stdin.readline()
 
 visited = [0]*(N+1)
 # 정점 배열 초기화
@@ -53,9 +51,9 @@ for i in range(N-1):
     nodes[int(input[1])].addAdj(int(input[0]))
 
 for i in range(N):
-    if isInside[i+1] == 1:
+    if isInside[i] == '1':
         DFS(nodes[i+1])
-        for j in range(N):
-            visited[j+1] = 0
+        # for j in range(N):
+        #     visited[j+1] = 0
 
 print(count)

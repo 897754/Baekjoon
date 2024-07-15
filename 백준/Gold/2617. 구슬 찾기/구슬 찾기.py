@@ -49,7 +49,7 @@ for i in range(M):
 count = 0
 del nodes[0]
 for node in nodes:
-    top =  DFSTop(node)-1
+    top = DFSTop(node)-1
     bot = DFSBot(node)-1
     val = N//2
     if top > val:

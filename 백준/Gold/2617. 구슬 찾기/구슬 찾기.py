@@ -7,16 +7,12 @@ class Node:
     def __init__(self, value) -> None:
         self.parents = []
         self.children = []
-        self.value = value
         self.visited = False
-        self.top = 0
-        self.bot = 0
-        self.others = 0
         
 
 def DFSTop(cur:Node):
     cur.visited = True
-    #print(cur.value, end=" ")
+    
     result = 1
     for i in cur.parents:
         if not i.visited:
@@ -25,7 +21,7 @@ def DFSTop(cur:Node):
 
 def DFSBot(cur:Node):
     cur.visited = True
-    #print(cur.value, end=" ")
+
     result = 1
     for i in cur.children:
         if not i.visited:
@@ -55,12 +51,10 @@ del nodes[0]
 for node in nodes:
     top =  DFSTop(node)-1
     bot = DFSBot(node)-1
-    others = N - top - bot
-    if top > bot + others:
-        #print(f"Top : {node.value} || {top} {bot} {others}")
+    val = N//2
+    if top > val:
         count+=1
-    elif bot > top + others:
-        #print(f"Bot : {node.value} || {bot} {top} {others}")
+    elif bot > val:
         count+=1
     for node in nodes:
         node.visited = False

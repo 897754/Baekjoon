@@ -1,30 +1,37 @@
 import sys
-sys.setrecursionlimit(10**8)
 
 
 class Node:
     def __init__(self, value) -> None:
-        self.parent = self
+        self.adj = []
         self.value = value
-    def getHead(self):
-        cur = self
-        while cur != cur.parent:
-            cur = cur.parent
-        return cur
-    
+        self.visited = 0
+       
 
+def BFS(cur:Node):
+    cur.visited = 1
+    deq.append(cur)
+    while len(deq):
+        cur = deq.popleft()
+        print(cur.value, end=" ")
+        for i in cur.adj:
+            if i.visited == 0:
+                deq.append(i)
+                i.visited = 1
+        
 
-
+sys.setrecursionlimit(10**8)
 
 input = sys.stdin.readline().split()
-V = int(input[0])
-E = int(input[1])
-for i in range(V):
-    input = sys.stdin.readline()
-    t.push(int(input))
+N = int(input[0])
+M = int(input[1])
 
-N = int(sys.stdin.readline())
+nodes = [None]
 for i in range(N):
-    input = sys.stdin.readline()
-    t.remove(int(input))
+    nodes.append(Node(i))
 
+for i in range(M):
+    input = sys.stdin.readline()
+
+for i in range(N):
+    print(nodes[i+1].depth)

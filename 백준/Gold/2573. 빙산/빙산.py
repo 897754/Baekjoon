@@ -46,13 +46,13 @@ def setAdjNodes(x,y):
     
     curX = x
     curY = y+1
-    if curY < M and inputArr[curX][curY] != 0:
+    if indexToID(curX, curY) in nodes:
         targetNode:Node = nodes[indexToID(curX,curY)]
         curNode.addAdj(targetNode)
         targetNode.addAdj(curNode)
     curX = x+1
     curY = y
-    if curX < N and inputArr[curX][curY] != 0:
+    if indexToID(curX, curY) in nodes:
         targetNode:Node = nodes[indexToID(curX,curY)]
         curNode.addAdj(targetNode)
         targetNode.addAdj(curNode)

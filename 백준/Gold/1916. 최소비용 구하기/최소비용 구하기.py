@@ -1,5 +1,5 @@
 import sys
-from collections import deque
+import heapq
 
 sys.setrecursionlimit(10**8)
 
@@ -7,21 +7,25 @@ class Node:
     def __init__(self, value) -> None:
         self.adj = {}
         self.value = value
-        self.visited = 0
         self.distance = 9999999999
+
+    def __lt__(self, other):
+        return  self.distance < other.distance
          
-def Dijkstra(cur:Node):
-    cur.visited = 1
-    keys = list(cur.adj.keys())
-    keys.sort(key= lambda x:cur.adj[x])
+def Dijkstra(start:Node):
+    q = []
+    heapq.heappush(q, start)
     
-    for n in keys:
-        if n.distance > cur.distance+cur.adj[n]:
-            n.visited = 0
-            n.distance = cur.distance+cur.adj[n]
-    for n in keys:
-        if n.visited == 0:
-            Dijkstra(n)
+    q.append(start)
+
+    
+    while len(q):
+        cur = heapq.heappop(q)
+        nodes = list(cur.adj.keys())
+        for n in nodes:
+            if n.distance > cur.distance+cur.adj[n]:
+                n.distance = cur.distance+cur.adj[n]
+                heapq.heappush(q, n)
 
 # 입력
 N = int(sys.stdin.readline())
@@ -39,6 +43,7 @@ for _ in range(M):
     b = nodes[int(input[1])]
     dist = int(input[2])
     
+    # 중복 간선 있을 경우 비용 높은건 무시
     if b in a.adj and a.adj[b] < dist:
         continue
     a.adj[b] = dist

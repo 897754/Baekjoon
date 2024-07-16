@@ -42,7 +42,7 @@ def indexToID(i,j):
     return i*M+j
 
 def setAdjNodes(x,y):
-    curNode:Node = nodes[indexToID(node,j)]
+    curNode:Node = nodes[indexToID(x,y)]
     
     curX = x
     curY = y+1

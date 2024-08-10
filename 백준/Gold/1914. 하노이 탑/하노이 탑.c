@@ -35,7 +35,7 @@ void Hanoi(int n, int from, int to)
     }
 }
 
-#define MAX_DIGITS 1000
+#define MAX_DIGITS 102
 
 // 큰 수 덧셈 함수
 void addBigNumbers(char* num1, char* num2, char* result) {

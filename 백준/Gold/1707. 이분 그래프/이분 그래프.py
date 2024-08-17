@@ -1,63 +1,55 @@
 import sys
+from collections import deque
 
-sys.setrecursionlimit(10**8)
-class Node:
-    def __init__(self, value) -> None:
-        self.adj = []
-        self.value = value
-        self.parent = None
-    def addAdj(self, value):
-        # if value in self.adj:
-        #     return
-        self.adj.append(value)
+# 케이스 숫자 받기
+noOfCase = int(sys.stdin.readline())
 
+results = []
 
-def DFS(cur:Node):
-    global count
+# BFS오
+def bfs(start, adj_dict, check):
+    queue = deque([start])
+    check[start] = 1  # Start node check value as 1
 
-    #count+=1
-    #print(cur.value, end=" ")
-
-    for i in cur.adj:
-        if color[i] == 0:
-            color[i] = color[cur.value]*-1
-            if not DFS(nodes[i]):
+    while queue:
+        node = queue.popleft()
+        for neighbor in adj_dict[node]:
+            if check[neighbor] == 0:
+                queue.append(neighbor)
+                check[neighbor] = -check[node] # 방문 안했다면, 부모 노드와 반대되는 그룹으로 할당 
+            elif check[neighbor] == check[node]: # 방문 했던 거라면, 부모노드와 같은 그룹으로 할당
                 return False
-        # 인접한 노드의 색이 같으면
-        elif color[i] == color[cur.value]:
-            return False
     return True
+
+
+# testcase만큼 돌리기
+for _ in range(noOfCase):
+    v, e = map(int, sys.stdin.readline().rstrip().split())
+    adj_dict = {i: [] for i in range(1, v+1)}
+
+    # edge들 받기
+    for _ in range(e):
+        n1, n2 = map(int, sys.stdin.readline().rstrip().split())
+        adj_dict[n1].append(n2)
+        adj_dict[n2].append(n1)
     
+    # 그룹 구별 리스트 (초기 값은 0, 두 그룹으로 나눔 1, -1)
+    check = [0] * (v + 1)
+    # 이분 그래프 확정 변수 초기화
+    is_bipartite = True 
 
-K = int(sys.stdin.readline())
-for i in range(K):
-    input = sys.stdin.readline().split()
-    V = int(input[0])
-    E = int(input[1])
+    # 모든 노드 돌면서 이분 그래프 확인하기 (떨어져 있는 그래프도 있으니)
+    for i in range(1, v + 1):
+        # 어처피 if절로 모든 노드를 이 for loop에서는 돌진 않음
+        if check[i] == 0:
+            if not bfs(i, adj_dict, check):
+                is_bipartite = False
+                break
 
-    color = [0]*(V+1)
-    # 정점 배열 초기화
-    nodes = [None]
-    for i in range(V):
-        nodes.append(Node(i+1))
-
-    #color[0] = 1
-
-
-    # 간선 배열 초기화
-    for i in range(E):
-        input = sys.stdin.readline().split()
-        nodes[int(input[0])].addAdj(int(input[1]))
-        nodes[int(input[1])].addAdj(int(input[0]))
-
-    flag = True
-    for i in range(V):
-        if color[i+1] == 0:
-            color[i+1] = 1
-            if not DFS(nodes[i+1]):
-                flag = False
-            
-    if flag:
-        print("YES")
+    
+    if is_bipartite:
+        results.append("YES")
     else:
-        print("NO")
+        results.append("NO")
+for result in results:
+    print(result)
